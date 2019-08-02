@@ -1,0 +1,8 @@
+# Dependencies
+/node_modules
+
+# Local Backup
+/components/local-backup/local-backup-config.json
+
+# Log
+/components/log/logconfig.json
