@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const log = require('./components/log/log');
 const file = require('./components/file/file');
 
-const fileToBackup = config.filepath.sourceFilePath + config.fileNames.fileToBackUp;
+const fileToBackUp = config.filepath.sourceFilePath + config.fileNames.fileToBackUp;
 const lockFile = config.filepath.sourceFilePath + config.fileNames.lockFile;
 
 log.logEntry('info', 'Service started');
@@ -29,9 +29,15 @@ const app = () => {
 			switch(result) {
 				case false:
 					console.log('Default or false, continue.');
-					return file.lastModified(fileToBackup)
+					return file.lastModified(fileToBackUp)
 						.then((result) => {
-							console.log(result);
+							return result;
+						}).then((result) => {
+							const backupFileName = fileToBackUp.substring(0, fileToBackUp.indexOf('.')) +
+								'_' +
+								result +
+								fileToBackUp.substring(fileToBackUp.indexOf('.'));
+							console.log(backupFileName);
 						})
 					break;
 				case true:
@@ -46,10 +52,6 @@ const app = () => {
 
 
 
-
-
-// 4. Get date and time stamp from file. We'll name the back up using this, since Access likes to change the date/time modified every time you open Access, even if no changes have been made.
-//		So, if database is named my-access-db.accdb and it was last modified 8/2/19 at 5:03 p.m., we will name the backup my-access-db_2019-08-02_1703.accdb.
 
 // 5. Make a copy of the file in a the local backup folder. Log this.
 
