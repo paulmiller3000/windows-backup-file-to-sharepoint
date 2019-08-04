@@ -2,7 +2,7 @@
 /config/config.json
 
 # Database
-/db/db-sample.sql
+/components/db/db.sql
 
 # Dependencies
 /node_modules
