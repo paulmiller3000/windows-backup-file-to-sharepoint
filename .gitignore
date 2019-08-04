@@ -1,6 +1,9 @@
 # Config
 /config/config.json
 
+# Database
+/db/db.sql
+
 # Dependencies
 /node_modules
 
