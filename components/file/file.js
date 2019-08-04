@@ -1,9 +1,9 @@
 const fs = require('fs');
 const moment = require('moment');
 
-const copyFileToLocalBackup = (file, backup) => {
+const copyFileToLocalBackup = (sourceFile, destinationFile) => {	
 	return new Promise( (resolve, reject) => {
-		fs.copyFile(file, backup, (err) => {
+		fs.copyFile(sourceFile, destinationFile, (err) => {
 			result = 'success';
 
 			if (err) result = 'fail';
@@ -12,6 +12,18 @@ const copyFileToLocalBackup = (file, backup) => {
 		})
 	})
 }
+
+/*const copyFileToSharePoint = (sourceFile, destinationFile) => {
+	return new Promise( (resolve, destinationFile) => {
+		fs.copyFile(sourceFile, backup, (err) => {
+			result = 'success';
+
+			if (err) result = 'fail';
+
+			resolve(result);
+		})
+	})
+}*/
 
 const isLockFilePresent = (file) => {
 	return new Promise( (resolve, reject) => {
@@ -39,13 +51,28 @@ const lastModified = (file) => {
 
 			resolve(result);
 		})
+	})
+}
 
-		
+const makeSubFolder = (folder) => {	
+	return new Promise( (resolve, reject) => {		
+
+		fs.mkdir(folder, { recursive: true }, (err) => {						
+			if (err) {
+				result = (err === 'EEXIST') ? true : false;
+			} else {
+				result = true;				
+			}
+			
+			resolve(result)
+		})
+
 	})
 }
 
 module.exports = {
 	copyFileToLocalBackup: copyFileToLocalBackup,
 	isLockFilePresent: isLockFilePresent,
-	lastModified: lastModified
+	lastModified: lastModified,
+	makeSubFolder: makeSubFolder
 }
